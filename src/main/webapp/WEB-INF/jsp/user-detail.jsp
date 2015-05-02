@@ -9,7 +9,7 @@ div.tabs {
 }
 </style>
 
-<h1>${user.name}</h1>
+<h1><c:out value="${user.name}"/></h1>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
@@ -33,12 +33,14 @@ div.tabs {
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
 							<form:input path="name" cssClass="form-control" />
+							<form:errors path="name"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="url" class="col-sm-2 control-label">URL:</label>
 						<div class="col-sm-10">
 							<form:input path="url" cssClass="form-control" />
+							<form:errors path="url"/>
 						</div>
 					</div>
 				</div>
@@ -56,7 +58,7 @@ div.tabs {
 	<!-- Blog tabs -->
 	<ul class="nav nav-tabs" role="tablist">
 		<c:forEach items="${user.blogs}" var="blog">
-			<li><a href="#blog_${blog.id}" data-toggle="tab">${blog.name}</a></li>
+			<li><a href="#blog_${blog.id}" data-toggle="tab"><c:out value="${blog.name}"/></a></li>
 		</c:forEach>
 	</ul>
 
@@ -66,11 +68,11 @@ div.tabs {
 			<div role="tabpanel" class="tab-pane" id="blog_${blog.id}">
 
 				<h1>
-					Blog - ${blog.name} <a class="btn btn-danger triggerRemove"
+					Blog - <c:out value="${blog.name}"/> <a class="btn btn-danger triggerRemove"
 						href='<spring:url value="/blog/remove/${blog.id}.html"/>'>Remove</a>
 				</h1>
 
-				<p>${blog.url}</p>
+				<p><c:out value="${blog.url}"/></p>
 
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
@@ -82,8 +84,8 @@ div.tabs {
 					<tbody>
 						<c:forEach items="${blog.items}" var="item">
 							<tr>
-								<td>${item.title}</td>
-								<td>${item.link}</td>
+								<td><c:out value="${item.title}"/></td>
+								<td><c:out value="${item.link}"/></td>
 							</tr>
 						</c:forEach>
 					</tbody>

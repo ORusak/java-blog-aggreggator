@@ -4,9 +4,12 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +63,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String doRegister(@ModelAttribute("user") User user){
+	public String doRegister(@Valid @ModelAttribute("user") User user, BindingResult result){
+		if(result.hasErrors()){
+			return "user-register";
+		}
+		
 		user.setEnabled(true);
 		
 		List<Role> roles	=	new ArrayList<Role>();
@@ -80,7 +87,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/account",method=RequestMethod.POST)
-	public String doAddBlog(@ModelAttribute("blog") Blog blog, Principal principal){
+	public String doAddBlog(@Valid @ModelAttribute("blog") Blog blog, BindingResult result, Model model, Principal principal){
+		if(result.hasErrors()){
+			return account(model, principal);
+		}
+		
 		String name = principal.getName();
 		blogService.save(blog, name);
 		
@@ -89,7 +100,9 @@ public class UserController {
 	
 	@RequestMapping("/blog/remove/{id}")
 	public String removeBlog(@PathVariable int id) {
-		blogService.delete(id);
+		Blog blog	=	blogService.findOne(id);
+		
+		blogService.delete(blog);
 		return "redirect:/account.html";
 	}
 	

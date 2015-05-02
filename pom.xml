@@ -134,7 +134,7 @@
 			<version>${org.springframework.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- web security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -205,12 +205,25 @@
 			<artifactId>hsqldb</artifactId>
 			<version>2.3.2</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.1.0.Final</version>
+		</dependency>
 
 		<!-- Jstl -->
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>
