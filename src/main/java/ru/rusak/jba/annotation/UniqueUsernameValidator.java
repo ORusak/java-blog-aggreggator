@@ -14,7 +14,6 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
 	
 	@Override
 	public void initialize(UniqueUsername constraintAnnotation) {
-		// TODO Auto-generated method stub
 		
 	}
 	

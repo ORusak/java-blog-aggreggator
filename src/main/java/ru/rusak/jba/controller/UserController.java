@@ -1,8 +1,6 @@
 package ru.rusak.jba.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ru.rusak.jba.entity.Blog;
-import ru.rusak.jba.entity.Role;
 import ru.rusak.jba.entity.User;
 import ru.rusak.jba.repository.RoleRepository;
 import ru.rusak.jba.service.BlogService;
