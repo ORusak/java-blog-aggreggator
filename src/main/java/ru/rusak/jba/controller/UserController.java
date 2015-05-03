@@ -44,51 +44,18 @@ public class UserController {
 		return new Blog();
 	}
 	
-	@RequestMapping("/users")
-	public String user(Model model){
-		model.addAttribute("users", userService.findAll());
-		return "users";
-	}
-	
-	@RequestMapping("/users/{id}")
-	public String detail(Model model, @PathVariable int id) {
-		model.addAttribute("user", userService.findOneWithBlogs(id));
-		
-		return "user-detail";
-	}
-	
-	@RequestMapping("/register")
-	public String showRegister(){
-		return "user-register";
-	}
-	
-	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String doRegister(@Valid @ModelAttribute("user") User user, BindingResult result){
-		if(result.hasErrors()){
-			return "user-register";
-		}
-		
-		user.setEnabled(true);
-		
-		List<Role> roles	=	new ArrayList<Role>();
-		roles.add(roleRepository.findByName("ROLE_USER"));
-		
-		user.setRoles(roles);
-		
-		userService.save(user);
-		return "redirect:/register.html?success=true";
-	}
-	
 	@RequestMapping("/account")
 	public String account(Model model, Principal principal){
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithBlogs(name));
+		
 		return "account";
 	}
 	
 	@RequestMapping(value="/account",method=RequestMethod.POST)
 	public String doAddBlog(@Valid @ModelAttribute("blog") Blog blog, BindingResult result, Model model, Principal principal){
 		if(result.hasErrors()){
+			model.addAttribute("show_add_blog", "true");
 			return account(model, principal);
 		}
 		
@@ -104,11 +71,5 @@ public class UserController {
 		
 		blogService.delete(blog);
 		return "redirect:/account.html";
-	}
-	
-	@RequestMapping("/users/remove/{id}")
-	public String removeUser(@PathVariable int id) {
-		userService.delete(id);
-		return "redirect:/users.html";
 	}
 }

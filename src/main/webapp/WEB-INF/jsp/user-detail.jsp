@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/taglib.jsp"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras"
+	prefix="tilesx"%>
+
+<tilesx:useAttribute name="current" />
 
 <style>
 div.tabs {
@@ -9,56 +13,22 @@ div.tabs {
 }
 </style>
 
-<h1><c:out value="${user.name}"/></h1>
+<h1>
+	<c:out value="${user.name}" />
+</h1>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
-	data-target="#myModal">New blog</button>
-
-<!-- Modal -->
-<form:form commandName="blog" cssClass="form-horizontal">
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">New blog</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="name" class="col-sm-2 control-label">Name:</label>
-						<div class="col-sm-10">
-							<form:input path="name" cssClass="form-control" />
-							<form:errors path="name"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="url" class="col-sm-2 control-label">URL:</label>
-						<div class="col-sm-10">
-							<form:input path="url" cssClass="form-control" />
-							<form:errors path="url"/>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" value="Save" />
-				</div>
-			</div>
-		</div>
-	</div>
-</form:form>
+<!-- В своем аккаунте можно заводить блоги. Админ другим пользователям добавлять не имеет прав. -->
+<c:if test="${current=='account'}">
+	<jsp:include page="/WEB-INF/layout/add-blog.jsp" />
+</c:if>
 
 <div class="tabs" role="tabpanel">
 
 	<!-- Blog tabs -->
 	<ul class="nav nav-tabs" role="tablist">
 		<c:forEach items="${user.blogs}" var="blog">
-			<li><a href="#blog_${blog.id}" data-toggle="tab"><c:out value="${blog.name}"/></a></li>
+			<li><a href="#blog_${blog.id}" data-toggle="tab"><c:out
+						value="${blog.name}" /></a></li>
 		</c:forEach>
 	</ul>
 
@@ -68,11 +38,15 @@ div.tabs {
 			<div role="tabpanel" class="tab-pane" id="blog_${blog.id}">
 
 				<h1>
-					Blog - <c:out value="${blog.name}"/> <a class="btn btn-danger triggerRemove"
+					Blog -
+					<c:out value="${blog.name}" />
+					<a class="btn btn-danger triggerRemove"
 						href='<spring:url value="/blog/remove/${blog.id}.html"/>'>Remove</a>
 				</h1>
 
-				<p><c:out value="${blog.url}"/></p>
+				<p>
+					<c:out value="${blog.url}" />
+				</p>
 
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
@@ -84,8 +58,8 @@ div.tabs {
 					<tbody>
 						<c:forEach items="${blog.items}" var="item">
 							<tr>
-								<td><c:out value="${item.title}"/></td>
-								<td><c:out value="${item.link}"/></td>
+								<td><c:out value="${item.title}" /></td>
+								<td><c:out value="${item.link}" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -111,8 +85,7 @@ div.tabs {
 			<div class="modal-body">Really remove?</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-				<a class="btn btn-danger removeBtn" 
-						href=''>Remove</a>
+				<a class="btn btn-danger removeBtn" href=''>Remove</a>
 			</div>
 		</div>
 	</div>
@@ -123,9 +96,10 @@ div.tabs {
 	//-->
 	$(document).ready(function() {
 		$('.nav-tabs a:first').tab('show'); // Select first tab
-		$('.triggerRemove').click(function(e){
+
+		$('.triggerRemove').click(function(e) {
 			e.preventDefault();
-			$('#modalRemove .removeBtn').attr('href',$(this).attr('href'));
+			$('#modalRemove .removeBtn').attr('href', $(this).attr('href'));
 			$('#modalRemove').modal();
 		});
 	});
