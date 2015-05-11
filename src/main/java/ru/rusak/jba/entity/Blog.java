@@ -3,6 +3,7 @@ package ru.rusak.jba.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,6 +25,7 @@ public class Blog {
 	
 	@URL(message = "Invalid URL!")
 	@Size(min = 1, message = "URL must be at least 1 character!")
+	@Column(length=1000)
 	private String url;
 	
 	@ManyToOne

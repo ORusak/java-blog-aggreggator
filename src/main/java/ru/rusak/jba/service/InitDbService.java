@@ -1,7 +1,6 @@
 package ru.rusak.jba.service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ru.rusak.jba.entity.Blog;
-import ru.rusak.jba.entity.Item;
 import ru.rusak.jba.entity.Role;
 import ru.rusak.jba.entity.User;
 import ru.rusak.jba.repository.BlogRepository;
@@ -66,20 +64,20 @@ public class InitDbService {
 		blogJavavids.setUser(userAdmin);
 		blogRepository.save(blogJavavids);
 		
-		Item item1			=	new Item();
-		item1.setBlog(blogJavavids);
-		item1.setTitle("first");
-		item1.setLink("http://javavids.com");
-		item1.setPublishedDate(new Date());
-		
-		Item item2			=	new Item();
-		item2.setBlog(blogJavavids);
-		item2.setTitle("second");
-		item2.setLink("http://javavids.com");
-		item2.setPublishedDate(new Date());
-		
-		itemRepository.save(item1);
-		itemRepository.save(item2);
+//		Item item1			=	new Item();
+//		item1.setBlog(blogJavavids);
+//		item1.setTitle("first");
+//		item1.setLink("http://javavids.com");
+//		item1.setPublishedDate(new Date());
+//		
+//		Item item2			=	new Item();
+//		item2.setBlog(blogJavavids);
+//		item2.setTitle("second");
+//		item2.setLink("http://javavids.com");
+//		item2.setPublishedDate(new Date());
+//		
+//		itemRepository.save(item1);
+//		itemRepository.save(item2);
 		
 	}
 }
